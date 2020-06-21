@@ -19,22 +19,21 @@ module "eks" {
 
   worker_groups = [
     {
-      instance_type = "t2.small"
+      instance_type = var.aws_instance_size
       asg_max_size  = 3
     }
   ]
 
   node_groups = {
     nodes = {
-      desired_capacity = 1
+      desired_capacity = 2
       max_capacity     = 3
       min_capacity     = 1
 
-      instance_type = "t2.small"
+      instance_type = var.aws_instance_size
       k8s_labels = {
         Environment = "staging"
       }
     }
   }
-
 }
