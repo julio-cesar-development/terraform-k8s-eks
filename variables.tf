@@ -17,3 +17,9 @@ variable "aws_instance_size" {
   # t2.medium: 2 vCPU and 4 GiB memory
   default     = "t2.medium"
 }
+
+variable "aws_key_name" {
+  type        = string
+  description = "SSH public key"
+  default     = "key_aws"
+}

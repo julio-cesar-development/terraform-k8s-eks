@@ -14,7 +14,7 @@ module "eks" {
   vpc_id          = aws_vpc.main-vpc.id
 
   tags = {
-    Environment = "staging"
+    environment = "staging"
   }
 
   worker_groups = [
@@ -26,13 +26,14 @@ module "eks" {
 
   node_groups = {
     nodes = {
+      name = "k8s-cluster-node"
       desired_capacity = 2
       max_capacity     = 3
       min_capacity     = 1
-
       instance_type = var.aws_instance_size
+      key_name = var.aws_key_name
       k8s_labels = {
-        Environment = "staging"
+        environment = "staging"
       }
     }
   }
