@@ -17,14 +17,14 @@ docker container run \
   --env AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
   --env AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION" \
   --env CLUSTER_NAME="$CLUSTER_NAME" \
+  --env TF_VAR_generate_kubeconfig_count=1 \
   --entrypoint "" \
   hashicorp/terraform:0.12.24 sh -c \
   "apk update && apk add --no-cache curl && \
   terraform init -backend=true && \
   terraform validate && \
   terraform plan -out=./plan.tfplan | tee ./plan.txt && \
-  terraform apply -auto-approve ./plan.tfplan | tee ./apply.txt && \
-  terraform output kube_config_raw_config > ./${CLUSTER_NAME}-kubeconfig.yaml"
+  terraform apply -auto-approve ./plan.tfplan | tee ./apply.txt"
 
 echo "Deployed successful"
 

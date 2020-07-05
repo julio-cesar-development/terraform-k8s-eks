@@ -1,11 +1,11 @@
-output "main-vpc" {
+output "cluster_vpc" {
   value = aws_vpc.main-vpc
 }
 
-output "subnets-public" {
-  value = aws_subnet.main-subnet-public.*.id
+output "public_subnets" {
+  value = aws_subnet.main-subnet-public
 }
 
-output "subnets-private" {
-  value = aws_subnet.main-subnet-private.*.id
+output "private_subnets" {
+  value = aws_subnet.main-subnet-private
 }

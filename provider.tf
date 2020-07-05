@@ -4,12 +4,10 @@ provider "aws" {
   region     = var.aws_region
 }
 
-# provider "kubernetes" {
-#   load_config_file = false
-#   host             = data.aws_eks_cluster.cluster.endpoint
-#   token            = data.aws_eks_cluster_auth.cluster.token
-#   cluster_ca_certificate = base64decode(
-#     data.aws_eks_cluster.cluster.certificate_authority.0.data
-#   )
-#   version = "~> 1.9"
-# }
+provider "kubernetes" {
+  load_config_file       = false
+  host                   = module.master.eks_cluster.endpoint
+  cluster_ca_certificate = base64decode(module.master.eks_cluster.certificate_authority.0.data)
+  token                  = module.master.eks_cluster_auth.token
+  version                = "~> 1.9"
+}

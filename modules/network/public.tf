@@ -12,7 +12,8 @@ resource "aws_subnet" "main-subnet-public" {
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = [for az in ["a", "c"] : format("%s-main-subnet-public-1%s", var.cluster_name, az)][count.index]
+    Name                                        = [for az in ["a", "c"] : format("%s-main-subnet-public-1%s", var.cluster_name, az)][count.index]
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 
   depends_on = [aws_vpc.main-vpc]
@@ -35,6 +36,8 @@ resource "aws_route" "main-public-route" {
   destination_cidr_block = "0.0.0.0/0"
   # The internet gateway
   gateway_id = aws_internet_gateway.main-gw.id
+
+  depends_on = [aws_internet_gateway.main-gw, aws_route_table.main-public-route-table]
 }
 
 resource "aws_route_table_association" "public-route-association" {

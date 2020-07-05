@@ -9,7 +9,8 @@ resource "aws_subnet" "main-subnet-private" {
   availability_zone = [for az in ["a", "c"] : format("%s%s", var.aws_region, az)][count.index]
 
   tags = {
-    Name = [for az in ["a", "c"] : format("%s-main-subnet-private-1%s", var.cluster_name, az)][count.index]
+    Name                                        = [for az in ["a", "c"] : format("%s-main-subnet-private-1%s", var.cluster_name, az)][count.index]
+    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 
   depends_on = [aws_vpc.main-vpc]
@@ -30,8 +31,10 @@ resource "aws_route" "main-private-route" {
   route_table_id = aws_route_table.main-private-route-table.id
   # The CIDR where the traffic comes from
   destination_cidr_block = "0.0.0.0/0"
-  # The internet gateway
-  gateway_id = aws_nat_gateway.main-nat-gw.id
+  # The NAT gateway
+  nat_gateway_id = aws_nat_gateway.main-nat-gw.id
+
+  depends_on = [aws_nat_gateway.main-nat-gw, aws_route_table.main-private-route-table]
 }
 
 resource "aws_route_table_association" "private-route-association" {

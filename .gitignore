@@ -2,7 +2,6 @@
 .terraform
 *.tfvars
 *kubeconfig.yaml
-kubeconfig*
 *.txt
 *.tfplan
 ssh_*
