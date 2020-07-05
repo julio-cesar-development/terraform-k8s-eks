@@ -17,7 +17,7 @@ docker container run \
   --env AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" \
   --env AWS_DEFAULT_REGION="$AWS_DEFAULT_REGION" \
   --env CLUSTER_NAME="$CLUSTER_NAME" \
-  --env TF_VAR_generate_kubeconfig_count=1 \
+  --env TF_VAR_generate_kubeconfig=true \
   --entrypoint "" \
   hashicorp/terraform:0.12.24 sh -c \
   "apk update && apk add --no-cache curl && \

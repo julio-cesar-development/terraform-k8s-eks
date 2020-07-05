@@ -38,17 +38,17 @@ variable "aws_private_cidr" {
 variable "aws_instance_size" {
   type        = string
   description = "AWS instance size for K8S nodes"
-  # t3.large: 2 vCPU and 8 GiB memory, storage EBS
-  default = "t3.large"
+  # t2.medium: 2 vCPU and 4 GiB memory
+  default = "t2.medium"
 }
 
 variable "aws_auto_scale_options" {
   type        = map
   description = "AWS auto scale options for K8S nodes"
   default = {
-    desired_size = 2
+    desired_size = 3
     max_size     = 10
-    min_size     = 2
+    min_size     = 3
   }
 }
 
@@ -72,8 +72,8 @@ variable "cluster_version" {
 }
 
 # Miscellaneous
-variable "generate_kubeconfig_count" {
-  type        = number
+variable "generate_kubeconfig" {
+  type        = bool
   description = "Decide whether generate a kubeconfig file locally or not"
-  default     = 0
+  default     = true
 }

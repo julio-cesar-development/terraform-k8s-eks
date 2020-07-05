@@ -9,3 +9,7 @@ output "endpoint" {
 output "kube_config_token" {
   value = module.master.eks_cluster_auth.token
 }
+
+output "kube_config_raw_config" {
+  value = local.kubeconfig
+}

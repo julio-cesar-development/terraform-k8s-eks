@@ -9,7 +9,7 @@ resource "aws_subnet" "main-subnet-private" {
   availability_zone = [for az in ["a", "c"] : format("%s%s", var.aws_region, az)][count.index]
 
   tags = {
-    Name                                        = [for az in ["a", "c"] : format("%s-main-subnet-private-1%s", var.cluster_name, az)][count.index]
+    Name = [for az in ["a", "c"] : format("%s-main-subnet-private-1%s", var.cluster_name, az)][count.index]
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 

@@ -6,7 +6,7 @@ resource "aws_eks_node_group" "cluster-nodes" {
   node_role_arn   = aws_iam_role.eks-nodes-role.arn
 
   # network settings
-  subnet_ids      = var.cluster_private_subnets.*.id
+  subnet_ids = var.cluster_private_subnets.*.id
   # to enable SSH access it should have public IPs on public subnet
   # subnet_ids      = var.cluster_public_subnets.*.id
 

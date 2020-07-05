@@ -12,7 +12,7 @@ resource "aws_subnet" "main-subnet-public" {
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name                                        = [for az in ["a", "c"] : format("%s-main-subnet-public-1%s", var.cluster_name, az)][count.index]
+    Name = [for az in ["a", "c"] : format("%s-main-subnet-public-1%s", var.cluster_name, az)][count.index]
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 
