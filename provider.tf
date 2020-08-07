@@ -9,5 +9,4 @@ provider "kubernetes" {
   host                   = module.master.eks_cluster.endpoint
   cluster_ca_certificate = base64decode(module.master.eks_cluster.certificate_authority.0.data)
   token                  = module.master.eks_cluster_auth.token
-  version                = "~> 1.9"
 }

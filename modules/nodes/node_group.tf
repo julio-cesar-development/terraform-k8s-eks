@@ -12,6 +12,7 @@ resource "aws_eks_node_group" "cluster-nodes" {
 
   # instance settings
   instance_types = [var.aws_instance_size]
+  # auto scaling
   scaling_config {
     desired_size = lookup(var.aws_auto_scale_options, "desired_size")
     max_size     = lookup(var.aws_auto_scale_options, "max_size")

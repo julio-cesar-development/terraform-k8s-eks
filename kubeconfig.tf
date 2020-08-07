@@ -11,9 +11,9 @@ echo "cluster $CLUSTER_NAME is healthy"
 CMD_EOF
 
     environment = {
-      CLUSTER_NAME           = module.master.eks_cluster.name
-      CLUSTER_ENDPOINT       = module.master.eks_cluster.endpoint
-      CLUSTER_TOKEN          = module.master.eks_cluster_auth.token
+      CLUSTER_NAME     = module.master.eks_cluster.name
+      CLUSTER_ENDPOINT = module.master.eks_cluster.endpoint
+      CLUSTER_TOKEN    = module.master.eks_cluster_auth.token
     }
   }
 
@@ -65,7 +65,7 @@ users:
       args:
         - "token"
         - "-i"
-        - "k8s-cluster"
+        - "$CLUSTER_NAME"
 EOF
 
 echo "file $CLUSTER_NAME-kubeconfig.yaml created"
@@ -79,9 +79,9 @@ CMD_EOF
   }
 
   # trigger everytime
-  # triggers = {
-  #   build_number = timestamp()
-  # }
+  triggers = {
+    build_number = timestamp()
+  }
 
   depends_on = [null_resource.wait_cluster]
 }
@@ -97,5 +97,5 @@ resource "local_file" "kubeconfig" {
 
 locals {
   kubeconfig_path = format("%s/%s-kubeconfig.yaml", path.root, module.master.eks_cluster.name)
-  kubeconfig = var.generate_kubeconfig ? (fileexists(local.kubeconfig_path) ? file(local.kubeconfig_path) : "") : ""
+  kubeconfig      = var.generate_kubeconfig ? (fileexists(local.kubeconfig_path) ? file(local.kubeconfig_path) : "") : ""
 }

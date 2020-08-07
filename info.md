@@ -11,6 +11,8 @@ terraform init -backend=true && \
   terraform apply -auto-approve
 
 terraform refresh
+terraform show
+terraform graph
 ```
 
 > Checking the K8S API
